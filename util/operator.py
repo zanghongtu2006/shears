@@ -45,6 +45,16 @@ class Operator:
                 print('Click resource failed' + str(e))
                 return False
 
+    def click_xpath_if_exist(self, xpath, timeout=2):
+        resource = self._d.xpath(xpath)
+        if resource is not None:
+            try:
+                resource.click(timeout=timeout)
+                return True
+            except Exception as e:
+                print('Click xpath failed' + str(e))
+                return False
+
     def get_resource_length(self, resource_id):
         if self.is_resource_exists(resource_id):
             try:

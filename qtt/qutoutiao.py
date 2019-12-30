@@ -22,11 +22,12 @@ from util.operator import Operator
 from util.reader import Reader
 
 
-class QuTouTiao:
-    def __init__(self, device_id):
-        self._d = u2.connect_usb(device_id)
-        self._operator = Operator(self._d)
-        self._reader = Reader(self._d)
+class QuTouTiao(object):
+    _app_id = 'com.jifen.qukan'
+
+    def __init__(self, d):
+        self._operator = Operator(d)
+        self._reader = Reader(d)
 
         self._article_list_res = 'com.jifen.qukan:id/am8'
 
@@ -80,9 +81,16 @@ class QuTouTiao:
 
 
 if __name__ == '__main__':
-    qtx = QuTouTiao('JGB9K17A18908832')
+    device_id = 'JGB9K17A18908832'
+    d = u2.connect_usb(device_id)
+    qtx = QuTouTiao(d)
 
+    total_artical = 0
     while True:
+        print("total_artical:", total_artical)
+        if total_artical > 50:
+            print('end')
+            break
         qtx.page_up()
         article_list_length = qtx.get_article_list_length()
         print(article_list_length)
@@ -91,4 +99,5 @@ if __name__ == '__main__':
         for i in range(0, article_list_length):
             if qtx.in_article(i):
                 qtx.read()
+                total_artical += 1
                 qtx.out_article()

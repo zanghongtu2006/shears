@@ -24,6 +24,8 @@ from util.reader import Reader
 
 
 class TaoXiaoShuo:
+    _app_id = 'com.martian.ttbook'
+
     _article_list_res = 'com.martian.ttbook:id/bs_list_book_name'
     _article_read_res = 'com.martian.ttbook:id/bd_reading'
     _article_advertise_close_res = 'com.martian.ttbook:id/bt_cancel'
@@ -51,6 +53,7 @@ class TaoXiaoShuo:
         self._operator.click_resource_if_exist(self._article_advertise_close_res)
 
     def out_article(self):
+        print(self._operator.get_resource_text('com.martian.ttbook:id/duration_bonus'))
         self._operator.go_back()
         time.sleep(3)
         self._operator.click_resource_if_exist(self._article_save_to_shell_res)
@@ -72,7 +75,7 @@ class TaoXiaoShuo:
                 time.sleep(600)
                 return
             self._reader.page_left()
-            time.sleep(random.randint(5, 10))
+            time.sleep(random.randint(5, 7))
             self._operator.click_resource_if_exist(self._article_advertise_close_res)
 
 
