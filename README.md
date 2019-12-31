@@ -1,5 +1,7 @@
 # shears
 
+## midu
+米读极速版
 ## dyjs
 抖音极速版
 ## qtt
