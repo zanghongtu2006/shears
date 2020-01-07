@@ -27,14 +27,18 @@ class Shuabao(object):
     _app_id = 'com.ss.android.ugc.aweme.lite'
 
     def __init__(self, d):
+        self._d = d
         self._operator = Operator(d)
         self._reader = Reader(d)
 
         self._bonus_res = 'com.ss.android.ugc.aweme.lite:id/kh'
 
-    def watch(self):
+    def start_app(self):
+        self._d.app_start(self._app_id)
+
+    def watch(self, num=150):
         i = 0
-        while i < 2000:
+        while i < num:
             print(i)
             self._reader.page_up()
             time.sleep(random.randint(20, 25))
@@ -44,6 +48,5 @@ class Shuabao(object):
 if __name__ == '__main__':
     device_id = 'JGB9K17A18908832'
     d = u2.connect_usb(device_id)
-    douyin = Shuabao(d)
-    while True:
-        douyin.watch()
+    shuabao = Shuabao(d)
+    shuabao.watch()

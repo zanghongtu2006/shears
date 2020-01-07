@@ -26,6 +26,7 @@ class QuTouTiao(object):
     _app_id = 'com.jifen.qukan'
 
     def __init__(self, d):
+        self._d = d
         self._operator = Operator(d)
         self._reader = Reader(d)
 
@@ -36,6 +37,9 @@ class QuTouTiao(object):
 
         self._comment_res = 'com.jifen.qukan:id/a0o'
         self._comment_text = '全部评论'
+
+    def start_app(self):
+        self._d.app_start(self._app_id)
 
     def get_top_left_bonus(self):
         bonus_text = self._operator.get_resource_text(self._top_left_bonus_res)
@@ -74,10 +78,10 @@ class QuTouTiao(object):
 
     def read(self):
         up_count = 0
-        while not qtx.check_end() and up_count < 10:
+        while not self.check_end() and up_count < 10:
             self._reader.read_article('V')
             up_count += 1
-            qtx.get_money()
+            self.get_money()
 
 
 if __name__ == '__main__':
@@ -88,7 +92,7 @@ if __name__ == '__main__':
     total_artical = 0
     while True:
         print("total_artical:", total_artical)
-        if total_artical > 50:
+        if total_artical > 30:
             print('end')
             break
         qtx.page_up()
