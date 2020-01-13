@@ -98,7 +98,7 @@ class Shuabao(object):
     def watch(self):
         i = 0
         while i < 15:
-            print(i, '-', get_local_time())
+            print(i, '-', get_local_time(), '-', self._operator.get_resource_text('com.jm.video:id/desc'))
             self._reader.page_up()
             sleep(random.randint(20, 25))
             i += 1
@@ -115,10 +115,13 @@ class Shuabao(object):
             '//*[@resource-id="com.jm.video:id/tabLayout"]/android.widget.LinearLayout[1]/android.widget.RelativeLayout[1]/android.widget.LinearLayout[1]')
 
     def shuabao(self):
+        print("%s Shuabao start ..." % get_local_time())
         self.start_app()
         self.sign()
         self.go_to_video()
         self.watch()
+        self._operator.close_all_app()
+        print("%s Shuabao end ..." % get_local_time())
 
 
 if __name__ == '__main__':

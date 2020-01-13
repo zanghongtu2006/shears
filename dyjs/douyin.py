@@ -15,13 +15,12 @@
 
 """
 import random
-import time
 
 import uiautomator2 as u2
 
 from util.operator import Operator
 from util.reader import Reader
-from util.util import get_local_time
+from util.util import get_local_time, sleep, get_hour
 
 
 class Douyin:
@@ -35,23 +34,20 @@ class Douyin:
 
     def start_app(self):
         self._operator.close_all_app()
-        time.sleep(5)
+        sleep()
         self._operator.start_app(self._app_id)
-        time.sleep(5)
+        sleep()
 
     # 右下角“我”
     def right_bottom_me(self):
 
         print("Click 我")
         self._operator.click_xpath_if_exist('//*[@text="我"]')
-        time.sleep(5)
+        sleep()
 
     # 提钱
     def get_money(self):
-        now = int(time.time())
-        time_struct = time.localtime(now)
-        hour = int(time.strftime("%H", time_struct))
-        if hour < 12:
+        if get_hour() < 12:
             return
         if self._operator.is_xpath_exist('//*[@text="去提现"]'):
             self._operator.click_xpath_if_exist('//*[@text="去提现"]')
@@ -64,17 +60,17 @@ class Douyin:
         # 中间取钱
         print("Click 赚钱")
         self._operator.click_resource_if_exist('com.ss.android.ugc.aweme.lite:id/kh')
-        time.sleep(5)
+        sleep()
         if self._operator.is_xpath_exist('//*[@text="看视频再赚"]'):
             self._operator.click_xpath_if_exist('//*[@text="看视频再赚"]')
-            time.sleep(15)
+            sleep(15)
             self._operator.click_xpath_if_exist('//*[@text="关闭广告"]')
-            time.sleep(5)
+            sleep()
         self.get_money()
         # 第二行整点广告领取金币
         if self._operator.is_xpath_exist('//*[@text="去领取"]'):
             self._operator.click_xpath_if_exist('//*[@text="去领取"]')
-            time.sleep(15)
+            sleep(15)
             self._operator.click_xpath_if_exist('//*[@text="关闭广告"]')
         self._operator.click_resource_if_exist('com.ss.android.ugc.aweme.lite:id/yv')
 
@@ -83,7 +79,7 @@ class Douyin:
         while i < 15:
             print(i, '-', get_local_time())
             self._reader.page_up()
-            time.sleep(random.randint(20, 25))
+            sleep(random.randint(20, 25))
             i += 1
 
     def is_video(self):
@@ -92,14 +88,17 @@ class Douyin:
     def go_to_video(self):
         while not self.is_video():
             self._operator.go_back()
-            time.sleep(5)
+            sleep()
         self._operator.click_xpath_if_exist('//*[@text="首页"]')
 
     def douyin(self):
+        print("%s Douyin start ..." % get_local_time())
         self.start_app()
         self.sign()
         self.go_to_video()
         self.watch()
+        self._operator.close_all_app()
+        print("%s Douyin end ..." % get_local_time())
 
 
 if __name__ == '__main__':
