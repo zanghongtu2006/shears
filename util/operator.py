@@ -57,7 +57,7 @@ class Operator:
 
     def click_xpath_if_exist(self, xpath, timeout=2):
         resource = self._d.xpath(xpath)
-        if resource is not None:
+        if resource.exists:
             try:
                 resource.click(timeout=timeout)
                 return True

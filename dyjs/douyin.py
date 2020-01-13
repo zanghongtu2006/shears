@@ -21,6 +21,7 @@ import uiautomator2 as u2
 
 from util.operator import Operator
 from util.reader import Reader
+from util.util import get_local_time
 
 
 class Douyin:
@@ -50,7 +51,7 @@ class Douyin:
         now = int(time.time())
         time_struct = time.localtime(now)
         hour = int(time.strftime("%H", time_struct))
-        if hour < 20:
+        if hour < 12:
             return
         if self._operator.is_xpath_exist('//*[@text="去提现"]'):
             self._operator.click_xpath_if_exist('//*[@text="去提现"]')
@@ -80,9 +81,7 @@ class Douyin:
     def watch(self):
         i = 0
         while i < 15:
-            now = int(time.time())
-            time_struct = time.localtime(now)
-            print(i, '-', time.strftime("%Y-%m-%d %H:%M:%S", time_struct))
+            print(i, '-', get_local_time())
             self._reader.page_up()
             time.sleep(random.randint(20, 25))
             i += 1
@@ -97,10 +96,10 @@ class Douyin:
         self._operator.click_xpath_if_exist('//*[@text="首页"]')
 
     def douyin(self):
-        douyin.start_app()
-        douyin.sign()
-        douyin.go_to_video()
-        douyin.watch()
+        self.start_app()
+        self.sign()
+        self.go_to_video()
+        self.watch()
 
 
 if __name__ == '__main__':
