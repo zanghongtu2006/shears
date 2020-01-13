@@ -21,6 +21,16 @@ class Operator:
     def __init__(self, d):
         self._d = d
 
+    def close_all_app(self):
+        print("Closing all apps...")
+        self._d.app_stop_all(excludes=['com.github.uiautomator'])
+        print("All apps are closed.")
+
+    def start_app(self, app_id):
+        print("Starting app %s ..." % app_id)
+        self._d.app_start(app_id)
+        print("App %s ... is started." % app_id)
+
     def is_resource_exists(self, resource_id, instance=0):
         try:
             return self._d(resourceId=resource_id, instance=instance).exists()
@@ -54,6 +64,10 @@ class Operator:
             except Exception as e:
                 print('Click xpath failed' + str(e))
                 return False
+
+    def is_xpath_exist(self, xpath):
+        resource = self._d.xpath(xpath)
+        return resource.exists
 
     def get_resource_length(self, resource_id):
         if self.is_resource_exists(resource_id):
