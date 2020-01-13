@@ -34,6 +34,8 @@ class Shuabao(object):
     def start_app(self):
         self._operator.close_all_app()
         sleep()
+        self._operator.close_all_app()
+        sleep()
         self._operator.start_app(self._app_id)
         sleep(15)
 
