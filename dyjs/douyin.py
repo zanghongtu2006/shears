@@ -14,13 +14,11 @@
 @desc:
 
 """
-import random
-
 import uiautomator2 as u2
 
 from util.operator import Operator
 from util.reader import Reader
-from util.util import get_local_time, sleep, get_hour
+from util.util import get_local_time, sleep, get_hour, sleep_random
 
 
 class Douyin:
@@ -79,7 +77,7 @@ class Douyin:
         while i < 15:
             print(i, '-', get_local_time())
             self._reader.page_up()
-            sleep(random.randint(20, 25))
+            sleep_random()
             i += 1
 
     def is_video(self):

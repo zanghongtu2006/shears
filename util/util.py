@@ -14,10 +14,18 @@
 @desc:
 
 """
+import random
 import time
 
 
 def sleep(second=5):
+    print("Sleep %d seconds" % second)
+    time.sleep(second)
+    print("Sleep %d seconds End" % second)
+
+
+def sleep_random(min=20, max=25):
+    second = random.randint(min, max)
     print("Sleep %d seconds" % second)
     time.sleep(second)
     print("Sleep %d seconds End" % second)

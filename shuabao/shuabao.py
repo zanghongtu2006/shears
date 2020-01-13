@@ -14,13 +14,11 @@
 @desc:
 
 """
-import random
-
 import uiautomator2 as u2
 
 from util.operator import Operator
 from util.reader import Reader
-from util.util import sleep, get_hour, get_local_time
+from util.util import sleep, get_hour, get_local_time, sleep_random
 
 
 class Shuabao(object):
@@ -100,7 +98,7 @@ class Shuabao(object):
         while i < 15:
             print(i, '-', get_local_time(), '-', self._operator.get_resource_text('com.jm.video:id/desc'))
             self._reader.page_up()
-            sleep(random.randint(20, 25))
+            sleep_random()
             i += 1
 
     def is_video(self):
