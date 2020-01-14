@@ -40,13 +40,12 @@ class Douyin:
 
     # 右下角“我”
     def right_bottom_me(self):
-
         print("Click 我")
         self._operator.click_xpath_if_exist('//*[@text="我"]')
         sleep()
 
     # 提钱
-    def get_money(self):
+    def withdraw(self):
         if get_hour() < 12:
             return
         if self._operator.is_xpath_exist('//*[@text="去提现"]'):
@@ -54,6 +53,11 @@ class Douyin:
             self._operator.click_xpath_if_exist('//*[@resource-id="app"]/android.view.View[4]/android.view.View[1]')
             self._operator.click_xpath_if_exist('//*[@text="立即提现"]')
             self._operator.click_xpath_if_exist('//android.app.Dialog/android.view.View[1]/android.view.View[4]')
+
+    def watch_adv(self):
+        sleep(15)
+        self._operator.click_xpath_if_exist('//*[@text="关闭广告"]')
+        sleep()
 
     def sign(self):
         self.right_bottom_me()
@@ -63,15 +67,13 @@ class Douyin:
         sleep()
         if self._operator.is_xpath_exist('//*[@text="看视频再赚"]'):
             self._operator.click_xpath_if_exist('//*[@text="看视频再赚"]')
-            sleep(15)
-            self._operator.click_xpath_if_exist('//*[@text="关闭广告"]')
-            sleep()
-        self.get_money()
+            self.watch_adv()
+        self._operator.click_xpath_if_exist('//*[@resource-id="app"]/android.view.View[3]')
+        self.watch_adv()
+        self.withdraw()
         # 第二行整点广告领取金币
         if self._operator.is_xpath_exist('//*[@text="去领取"]'):
             self._operator.click_xpath_if_exist('//*[@text="去领取"]')
-            sleep(15)
-            self._operator.click_xpath_if_exist('//*[@text="关闭广告"]')
         self._operator.click_resource_if_exist('com.ss.android.ugc.aweme.lite:id/yv')
 
     def watch(self):

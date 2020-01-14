@@ -14,11 +14,10 @@
 @desc:
 
 """
-import random
-import time
 
 from util.operator import Operator
 from util.screen import Screen
+from util.util import sleep_random
 
 
 class Reader:
@@ -56,7 +55,7 @@ class Reader:
             self._screen.page_left()
         else:
             self._screen.page_up()
-        time.sleep(random.randint(1, 4))
+        sleep_random(3, 6)
 
     def exit_article(self):
         self._operator.go_back()

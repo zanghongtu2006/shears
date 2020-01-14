@@ -53,7 +53,7 @@ class Shuabao(object):
         self._operator.click_resource_if_exist('com.jm.video:id/tt_video_ad_close')
 
     # 提钱
-    def get_money(self):
+    def withdraw(self):
         if get_hour() < 12:
             return
         adv_finish = False
@@ -83,7 +83,7 @@ class Shuabao(object):
         if self._operator.is_resource_exists('com.jm.video:id/imgClose'):
             self._operator.click_resource_if_exist('com.jm.video:id/imgClose')
             sleep()
-        self.get_money()
+        self.withdraw()
         if self._operator.is_xpath_exist('//*[@text="立即签到"]'):
             self._operator.click_xpath_if_exist('//*[@text="立即签到"]')
             sleep()

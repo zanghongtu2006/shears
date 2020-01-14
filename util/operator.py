@@ -14,6 +14,7 @@
 @desc:
 
 """
+from util.util import sleep
 
 
 class Operator:
@@ -24,11 +25,13 @@ class Operator:
     def close_all_app(self):
         print("Closing all apps...")
         self._d.app_stop_all(excludes=['com.github.uiautomator'])
+        sleep()
         print("All apps are closed.")
 
     def start_app(self, app_id):
         print("Starting app %s ..." % app_id)
         self._d.app_start(app_id)
+        sleep(60)
         print("App %s ... is started." % app_id)
 
     def is_resource_exists(self, resource_id, instance=0):
@@ -36,6 +39,16 @@ class Operator:
             return self._d(resourceId=resource_id, instance=instance).exists()
         except Exception as e:
             print('Check resourceId exists failed, return False' + str(e))
+            return False
+
+    def click_position(self, x, y):
+        try:
+            print('Click position: ', x, y)
+            self._d.click(x, y)
+            sleep()
+            return True
+        except Exception as e:
+            print('Click position failed' + str(e))
             return False
 
     def click_resource(self, resource_id, instance=0, timeout=2):
@@ -49,21 +62,30 @@ class Operator:
     def click_resource_if_exist(self, resource_id, timeout=2):
         if self.is_resource_exists(resource_id):
             try:
+                print('Click resource: ', resource_id)
                 self._d(resourceId=resource_id).click(timeout=timeout)
+                sleep()
                 return True
             except Exception as e:
                 print('Click resource failed' + str(e))
                 return False
+        else:
+            print('Resource %s not exist' % resource_id)
+            return False
 
     def click_xpath_if_exist(self, xpath, timeout=2):
-        resource = self._d.xpath(xpath)
-        if resource.exists:
+        if self._d.xpath(xpath).exists:
             try:
-                resource.click(timeout=timeout)
+                print('Click xpath: ', xpath)
+                self._d.xpath(xpath).click(timeout=timeout)
+                sleep()
                 return True
             except Exception as e:
                 print('Click xpath failed' + str(e))
                 return False
+        else:
+            print('XPath %s not exist' % xpath)
+            return False
 
     def is_xpath_exist(self, xpath):
         resource = self._d.xpath(xpath)
@@ -89,6 +111,7 @@ class Operator:
 
     def go_back(self):
         self._d.press("back")
+        sleep()
 
 
 if __name__ == '__main__':
