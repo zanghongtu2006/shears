@@ -86,7 +86,6 @@ class QuTouTiao(object):
         self._operator.click_xpath_if_exist('//*[@text="刷新"]')
         total_artical = 0
         while total_artical < 5:
-            print("total_artical: ", total_artical)
             self._reader.page_up()
             article_list_length = self.get_article_list_length()
             self.get_top_left_bonus()
@@ -95,6 +94,7 @@ class QuTouTiao(object):
                     self.read_article()
                     total_artical += 1
                     self._operator.go_back()
+                    print("total_artical: ", total_artical)
 
     def watch(self):
         print("观看视频")
@@ -127,8 +127,6 @@ class QuTouTiao(object):
         if self._operator.is_resource_exists('com.jifen.qukan:id/brl'):
             self._operator.click_resource_if_exist('com.jifen.qukan:id/brl')
             self._operator.click_resource_if_exist('com.jifen.qukan:id/a66')
-        else:
-            sleep()
 
     def get_article_list_length(self):
         length = self._reader.get_article_list_length(self._article_list_res)

@@ -33,18 +33,13 @@ class Shuabao(object):
 
     def start_app(self):
         self._operator.close_all_app()
-        sleep()
         self._operator.close_all_app()
-        sleep()
         self._operator.start_app(self._app_id)
-        sleep(15)
 
     # 右下角“我”
     def right_bottom_me(self):
         print("Click 我")
-        self._operator.click_xpath_if_exist(
-            '//*[@resource-id="com.jm.video:id/tabLayout"]/android.widget.LinearLayout[1]/android.widget.RelativeLayout[5]')
-        sleep()
+        self._operator.click_xpath_if_exist('//*[@text="我"]')
 
     def watch_adv(self):
         sleep(35)
@@ -60,7 +55,6 @@ class Shuabao(object):
         while not adv_finish:
             if self._operator.is_xpath_exist('//*[@text="提现"]'):
                 self._operator.click_xpath_if_exist('//*[@text="提现"]')
-                sleep()
                 if self._operator.is_xpath_exist('//*[@text="立即观看"]'):
                     self._operator.click_xpath_if_exist('//*[@text="立即观看"]')
                     self.watch_adv()
@@ -77,21 +71,16 @@ class Shuabao(object):
         self.right_bottom_me()
         # 中间任务
         print("Click 任务")
-        self._operator.click_xpath_if_exist(
-            '//*[@resource-id="com.jm.video:id/tabLayout"]/android.widget.LinearLayout[1]/android.widget.RelativeLayout[4]')
-        sleep()
+        self._operator.click_xpath_if_exist('//*[@text="任务"]')
         if self._operator.is_resource_exists('com.jm.video:id/imgClose'):
             self._operator.click_resource_if_exist('com.jm.video:id/imgClose')
-            sleep()
         self.withdraw()
         if self._operator.is_xpath_exist('//*[@text="立即签到"]'):
             self._operator.click_xpath_if_exist('//*[@text="立即签到"]')
-            sleep()
             if self._operator.is_xpath_exist('//*[@text="放弃签到看视频签到"]'):
                 resource = self._d.xpath('//*[@text="放弃签到看视频签到"]')
                 resource.click()
                 self.watch_adv()
-                sleep()
                 self._operator.click_xpath_if_exist(
                     '//*[@text="刷宝短视频"]/android.view.View[1]/android.view.View[6]/android.view.View[1]/android.view.View[1]')
 
@@ -110,7 +99,6 @@ class Shuabao(object):
     def go_to_video(self):
         while not self.is_video():
             self._operator.go_back()
-            sleep()
         self._operator.click_xpath_if_exist(
             '//*[@resource-id="com.jm.video:id/tabLayout"]/android.widget.LinearLayout[1]/android.widget.RelativeLayout[1]/android.widget.LinearLayout[1]')
 
