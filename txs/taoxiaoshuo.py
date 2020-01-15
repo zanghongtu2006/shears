@@ -67,13 +67,12 @@ class TaoXiaoShuo:
         return text is not None and text == self._article_end_text
 
     def read(self):
+        i = 0
         while not taoxiaoshuo.check_end():
+            i += 1
             now = int(time.time())
             time_struct = time.localtime(now)
-            current_hour = int(time.strftime("%H", time_struct))
-            if 3 < current_hour < 8:
-                time.sleep(600)
-                return
+            print(i, '-', time.strftime("%Y-%m-%d %H:%M:%S", time_struct))
             self._reader.page_left()
             time.sleep(random.randint(5, 7))
             self._operator.click_resource_if_exist(self._article_advertise_close_res)

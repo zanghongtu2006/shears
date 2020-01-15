@@ -18,11 +18,12 @@ import uiautomator2 as u2
 
 from util.operator import Operator
 from util.reader import Reader
-from util.util import sleep, sleep_random, get_hour, get_local_time
+from util.util import sleep, sleep_random, get_local_time
 
 
 class QuTouTiao(object):
     _app_id = 'com.jifen.qukan'
+    _resource_id = _app_id + ":id/"
 
     def __init__(self, d):
         self._d = d
@@ -39,16 +40,16 @@ class QuTouTiao(object):
 
     def start_app(self):
         self._operator.close_all_app()
-        self._operator.close_all_app()
         self._operator.start_app(self._app_id)
 
     # 右下角“我”
-    def right_bottom_me(self):
+    def into_me(self):
         print("Click 我的")
-        self._operator.click_xpath_if_exist('//*[@text="我的"]')
+        while not self._operator.is_xpath_exist('//*[@text="查看个人主页"]'):
+            self._operator.click_xpath_if_exist('//*[@text="我的"]')
 
     def sign(self):
-        self.right_bottom_me()
+        self.into_me()
         self.withdraw()
         print("Click 去签到")
         self._operator.click_xpath_if_exist('//*[@text="去签到"]')

@@ -25,10 +25,11 @@ from util.reader import Reader
 
 class MiDu:
     _app_id = 'com.lechuan.mdwz'
+    _resource_id = _app_id + ":id/"
 
-    _article_list_res = 'com.lechuan.mdwz:id/gm'
-    _article_read_res = 'com.lechuan.mdwz:id/re'
-    _article_advertise_close_res = 'com.lechuan.mdwz:id/p6'
+    _res_article_list = _resource_id + 'gm'
+    _res_article_read = _resource_id + 're'
+    _res_article_advertise_close = _resource_id + 'p6'
 
     # _article_save_to_shell_res = 'com.martian.ttbook:id/dialog_close'
     # _article_end_res = 'com.martian.ttbook:id/tv_buy_reading_purcgase'
@@ -44,7 +45,15 @@ class MiDu:
         self._reader.page_up()
 
     def start_app(self):
-        self._d.app_start(self._app_id)
+        self._operator.close_all_app()
+        self._operator.start_app(self._app_id)
+        while not (self._operator.is_xpath_exist('//*[@text="我的"]') and
+                   self._operator.is_xpath_exist('//*[@text="福利"]')):
+            self._operator.go_back()
+
+    def into_me(self):
+        print("Into 我")
+        return self._operator.into_page_xpath('//*[@text="我的"]', None, None)
 
     def get_article_list_length(self):
         return self._operator.get_resource_length(self._article_list_res)
@@ -76,16 +85,15 @@ class MiDu:
         # return text is not None and text == self._article_end_text
 
     def read(self):
+        i = 0
         while not self.check_end():
+            i += 1
             now = int(time.time())
             time_struct = time.localtime(now)
-            current_hour = int(time.strftime("%H", time_struct))
-            if 3 < current_hour < 8:
-                time.sleep(600)
-                return
-            self._d.click(0.968, round(random.uniform(0.2, 0.8), 3))
-            time.sleep(random.randint(5, 7))
-            self._operator.click_resource_if_exist(self._article_advertise_close_res)
+            print(i, '-', time.strftime("%Y-%m-%d %H:%M:%S", time_struct))
+            self._d.click(0.988, round(random.uniform(0.2, 0.8), 3))
+            time.sleep(random.randint(7, 10))
+            self._operator.click_resource_if_exist(self._res_article_advertise_close)
             self._operator.click_resource_if_exist('com.lechuan.mdwz:id/g_')
             s = self._operator.get_resource_text('com.lechuan.mdwz:id/nz')
             if s is not None and s == '立即领取':
@@ -98,16 +106,18 @@ class MiDu:
     def operator(self):
         return self._operator
 
+    def midu(self):
+        self.start_app()
+
 
 if __name__ == '__main__':
     d = u2.connect_usb('JGB9K17A18908832')
     midu = MiDu(d)
-    while True:
-        midu.read()
-        # length = midu.get_article_list_length()
-        # print(length)
-        # for i in range(0, length):
-        #     midu.in_article(i)
-        #     midu.read()
-        # midu.out_article()
-        # midu.next_article_list()
+    midu.start_app()
+    # length = midu.get_article_list_length()
+    # print(length)
+    # for i in range(0, length):
+    #     midu.in_article(i)
+    #     midu.read()
+    # midu.out_article()
+    # midu.next_article_list()

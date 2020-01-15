@@ -33,7 +33,6 @@ class Shuabao(object):
 
     def start_app(self):
         self._operator.close_all_app()
-        self._operator.close_all_app()
         self._operator.start_app(self._app_id)
 
     # 右下角“我”

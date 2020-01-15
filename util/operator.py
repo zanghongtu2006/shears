@@ -25,6 +25,7 @@ class Operator:
     def close_all_app(self):
         print("Closing all apps...")
         self._d.app_stop_all(excludes=['com.github.uiautomator'])
+        self._d.app_stop_all(excludes=['com.github.uiautomator'])
         sleep()
         print("All apps are closed.")
 
@@ -112,6 +113,55 @@ class Operator:
     def go_back(self):
         self._d.press("back")
         sleep()
+
+    def into_page_xpath(self, xpath, page_cursor_res, page_cursor_xpath):
+        print("Into xpath: ", xpath)
+        i = 0
+        while not self.is_xpath_exist(xpath):
+            i += 1
+            if i > 10:
+                return False
+            self.go_back()
+        i = 0
+        if page_cursor_res is not None:
+            while not self.is_resource_exists(page_cursor_res):
+                i += 1
+                if i > 10:
+                    return False
+                self.click_xpath_if_exist(xpath)
+        i = 0
+        if page_cursor_xpath is not None:
+            while not self.is_xpath_exist(page_cursor_xpath):
+                i += 1
+                if i > 10:
+                    return False
+                self.click_xpath_if_exist(xpath)
+        return True
+
+    def into_page_resource(self, resource_id, page_cursor_res, page_cursor_xpath):
+        print("Into resource: ", resource_id)
+        i = 0
+        while not self.is_resource_exists(resource_id):
+            i += 1
+            if i > 10:
+                return False
+            self.go_back()
+        i = 0
+        if page_cursor_xpath is not None:
+            while not self.is_xpath_exist(page_cursor_xpath):
+                i += 1
+                if i > 10:
+                    return False
+                self.click_resource_if_exist(resource_id)
+        i = 0
+        if page_cursor_res is not None:
+            while not self.is_resource_exists(page_cursor_res):
+                i += 1
+                if i > 10:
+                    return False
+                self.click_resource_if_exist(resource_id)
+
+        return True
 
 
 if __name__ == '__main__':

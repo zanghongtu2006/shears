@@ -23,6 +23,10 @@ from util.util import get_local_time, sleep
 
 class WanQia:
     _app_id = 'com.yyk.whenchat'
+    _resource_id = _app_id + ':id/'
+    _btn_cancle_bind_phone = _resource_id + 'btnLeft'
+    _txt_cancle_bind_phone = '取消'
+    _btn_me = _resource_id + 'ivTabMine'
 
     def __init__(self, d):
         self._d = d
@@ -31,14 +35,13 @@ class WanQia:
 
     def start_app(self):
         self._operator.close_all_app()
-        self._operator.close_all_app()
         self._operator.start_app(self._app_id)
-        text = self._operator.get_resource_text('com.yyk.whenchat:id/btnLeft')
-        if text is not None and text == '':
-            self._operator.click_resource_if_exist('com.yyk.whenchat:id/btnLeft')
+        text = self._operator.get_resource_text(self._btn_cancle_bind_phone)
+        if text is not None and text == self._txt_cancle_bind_phone:
+            self._operator.click_resource_if_exist(self._btn_cancle_bind_phone)
 
     def sign(self):
-        self._operator.click_resource_if_exist('com.yyk.whenchat:id/ivTabMine')
+        self._operator.click_resource_if_exist(self._btn_me)
         self._operator.click_xpath_if_exist(
             '//*[@resource-id="com.yyk.whenchat:id/vInvite"]/android.widget.ImageView[1]')
         self._operator.click_position(0.561, 0.878)
