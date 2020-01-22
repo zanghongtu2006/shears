@@ -23,6 +23,8 @@ from util.util import sleep, get_hour, get_local_time, sleep_random
 
 class Shuabao(object):
     _app_id = 'com.jm.video'
+    _resource_id = _app_id + ":id/"
+    _res_my_name = _resource_id + 'tv_name'
 
     def __init__(self, d):
         self._d = d
@@ -38,7 +40,7 @@ class Shuabao(object):
     # 右下角“我”
     def right_bottom_me(self):
         print("Click 我")
-        self._operator.click_xpath_if_exist('//*[@text="我"]')
+        self._operator.into_page_xpath('//*[@text="我"]', self._res_my_name, None)
 
     def watch_adv(self):
         sleep(35)

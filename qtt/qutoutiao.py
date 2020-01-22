@@ -54,8 +54,13 @@ class QuTouTiao(object):
         print("Click 去签到")
         self._operator.click_xpath_if_exist('//*[@text="去签到"]')
         self._operator.click_xpath_if_exist('//*[@text="任务"]')
-        print("60天超长签到")
+
+        i = 0
         while not self._operator.is_xpath_exist('//*[@text="挑战60天超长签到"]'):
+            print("60天超长签到")
+            i += 1
+            if i > 10:
+                break
             self._reader.page_up()
         self._operator.click_xpath_if_exist('//*[@text="挑战60天超长签到"]')
         self._operator.go_back()

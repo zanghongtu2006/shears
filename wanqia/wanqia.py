@@ -42,9 +42,11 @@ class WanQia:
 
     def sign(self):
         self._operator.click_resource_if_exist(self._btn_me)
-        self._operator.click_xpath_if_exist(
-            '//*[@resource-id="com.yyk.whenchat:id/vInvite"]/android.widget.ImageView[1]')
-        self._operator.click_position(0.561, 0.878)
+        # self._operator.click_xpath_if_exist(
+        #     '//*[@resource-id="com.yyk.whenchat:id/vInvite"]/android.widget.ImageView[1]')
+        self._operator.click_xpath_if_exist('//*[@text="邀请赚钱"]')
+        self._operator.click_position(0.500, 0.880)
+        # self._operator.click_xpath_if_exist('//*[@text="立即邀请"]')
         while not self._operator.is_resource_exists('com.tencent.mm:id/ln'):
             self._operator.click_xpath_if_exist(
                 '//*[@resource-id="com.yyk.whenchat:id/gvBody"]/android.widget.LinearLayout[1]/android.widget.ImageView[1]')

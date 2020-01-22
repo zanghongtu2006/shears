@@ -60,17 +60,21 @@ if __name__ == '__main__':
     wanqia_success = False
     while True:
         if 0 < get_hour() < 7:
-            # if get_minute() < 20:
-            #     task.exec_wanqia()
+            if get_minute() < 20:
+                task.exec_wanqia()
             sleep(60)
             continue
         if get_minute() < 10:
             task.exec_douyin()
         elif get_minute() < 20:
             task.exec_shuabao()
-        elif get_minute() < 30:
-            task.exec_qutoutiao()
+        if get_minute() < 40:
+            task.exec_douyin()
+        elif get_minute() < 50:
+            task.exec_shuabao()
+        # elif get_minute() < 30:
+        #     task.exec_qutoutiao()
         else:
             task.stop_all_apps()
-            sleep(300)
+            sleep(100)
             continue
