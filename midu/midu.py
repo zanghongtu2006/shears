@@ -32,6 +32,7 @@ class MiDu:
     _res_article_advertise_close = _resource_id + 'p6'
     _btn_adv_in_adv = _resource_id + 'pe'
     _btn_adv_close_adv = _resource_id + 'tt_video_ad_close'
+
     # _article_save_to_shell_res = 'com.martian.ttbook:id/dialog_close'
     # _article_end_res = 'com.martian.ttbook:id/tv_buy_reading_purcgase'
     # _article_end_text = '余额不足请充值'
@@ -90,9 +91,12 @@ class MiDu:
         while not self.check_end():
             i += 1
             print(i, '-', get_local_time())
-            self._d.click(0.988, round(random.uniform(0.3, 0.7), 3))
-            sleep_random(7, 10)
-            self._operator.click_resource_if_exist('com.lechuan.mdwz:id/pb')
+            try:
+                self._d.click(0.988, round(random.uniform(0.3, 0.7), 3))
+            except Exception as e:
+                print('Click resource failed' + str(e))
+            sleep_random(2, 5)
+            self._operator.click_resource_if_exist('com.lechuan.mdwz:id/oh')
             # 看视频翻倍金币
             # if self._operator.is_resource_exists(self._btn_adv_in_adv):
             #     self._operator.click_resource_if_exist(self._btn_adv_in_adv)
@@ -114,7 +118,8 @@ class MiDu:
 
 
 if __name__ == '__main__':
-    d = u2.connect_usb('JGB9K17A18908832')
+    device_id = '192.168.168.10:5555'
+    d = u2.connect(device_id)
     midu = MiDu(d)
     midu.read()
     # length = midu.get_article_list_length()

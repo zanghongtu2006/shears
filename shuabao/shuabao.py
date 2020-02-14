@@ -7,7 +7,7 @@
 
 @contact: zanghongtu2006@gmail.com
 
-@file: douyin.py
+@file: huoshan.py
 
 @time: 19-12-22 下午2:38
 
