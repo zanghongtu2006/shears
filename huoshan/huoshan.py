@@ -148,7 +148,7 @@ class Kuaishou:
 
 
 if __name__ == '__main__':
-    device_id = '192.168.168.10:5555'
+    device_id = '192.168.168.8:5555'
     d = u2.connect(device_id)
     kuaishou = Kuaishou(d)
     # d.session(douyin._app_id, attach=True)
